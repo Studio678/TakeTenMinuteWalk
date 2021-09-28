@@ -29,10 +29,10 @@ class Walks:
         self.y = self.startY
         self.point = [self.x, self.y]
         self.directions = {
-            'n': self.point.insert(self.point[0], self.point[1] + 1),
-            's': self.point.insert(self.point[0], self.point[1] - 1),
-            'e': self.point.insert(self.point[0] + 1, self.point[1]),
-            'w': self.point.insert(self.point[0] - 1, self.point[1])
+            'n': 1,
+            's': 2,
+            'e': 3,
+            'w': 4
         }
 
     def is_valid_walk(self):
@@ -42,10 +42,19 @@ class Walks:
         if long_of_walk == Walks.max_long_of_walk:
             for move in self.walk:
                 try:
-                    self.point = self.directions[move]
+                    key = self.directions[move]
+                    if key == 1:
+                        self.point[1] += 1
+                    elif key == 2:
+                        self.point[1] -= 1
+                    elif key == 3:
+                        self.point[0] += 1
+                    elif key == 4:
+                        self.point[0] -= 1
                 except KeyError as e:
                     # set default error value
                     raise ValueError('Undeclared unit: {}'.format(e.args[0]))
+
             if self.startX == self.point[0] and self.startY == self.point[1]:
                 return True
         else:
